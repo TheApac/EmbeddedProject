@@ -6,8 +6,6 @@
 #ifndef UNTITLED6_GETFORMATTEDDATE_H
 #define UNTITLED6_GETFORMATTEDDATE_H
 
-using namespace std;
-
-string getFormattedDate(unsigned int dateTime);
+void getFormattedDate(unsigned int dateTime);
 
 #endif //UNTITLED6_GETFORMATTEDDATE_H
