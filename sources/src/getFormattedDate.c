@@ -3,6 +3,7 @@
 //
 #include <time.h>
 #include "../include/getFormattedDate.h"
+#include <stdio.h>
 
 void getFormattedDate(unsigned int dateTime) {
 	long int sec = dateTime;

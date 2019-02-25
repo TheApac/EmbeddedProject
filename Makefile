@@ -14,6 +14,7 @@ SOURCES= sources/src/failure.c		\
 		sources/src/readComponentFromValue.c  \
 		sources/src/readCountryFromPlaneCode.c  \
 		sources/src/readFailureFromValue.c \
+		sources/src/hex2dec.c \
 		sources/src/readTypePlaneFromValue.c
 
 SOURCES_OBJS= $(SOURCES:.c=.o)

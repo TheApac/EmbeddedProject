@@ -4,6 +4,8 @@
 
 #include "../include/readTypePlaneFromValue.h"
 #include <xlsxio_read.h>
+#include "stdlib.h"
+#include "../include/hex2dec.h"
 
 char* readTypePlaneFromValue(unsigned int value) {
 	xlsxioreader xlsxioread;
@@ -11,13 +13,14 @@ char* readTypePlaneFromValue(unsigned int value) {
 		return "";
 	}
 	char* type;
+	char *val;
 	xlsxioreadersheet sheet;
 	const char* sheetname = "TYPE_PLANE";
 	if ((sheet = xlsxioread_sheet_open(xlsxioread, sheetname, XLSXIOREAD_SKIP_EMPTY_ROWS)) != NULL) {
 		while (xlsxioread_sheet_next_row(sheet)) {
 			int col = 0;
 			while ((val = xlsxioread_sheet_next_cell(sheet)) != NULL) {
-				if (col == 1 && val == value) {
+				if (col == 1 && hex2dec(val) == value) {
 					type = xlsxioread_sheet_next_cell(sheet);
 					free(val);
 					xlsxioread_sheet_close(sheet);

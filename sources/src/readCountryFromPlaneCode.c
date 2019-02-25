@@ -3,6 +3,8 @@
 //
 
 #include "../include/readCountryFromPlaneCode.h"
+#include <xlsxio_read.h>
+#include "stdlib.h"
 
 char* readCountryFromPlaneCode(unsigned char code[]) {
 	xlsxioreader xlsxioread;
@@ -10,6 +12,7 @@ char* readCountryFromPlaneCode(unsigned char code[]) {
 		return "";
 	}
 	char* country;
+	char *val;
 	xlsxioreadersheet sheet;
 	const char* sheetname = "ID_PLANES";
 	if ((sheet = xlsxioread_sheet_open(xlsxioread, sheetname, XLSXIOREAD_SKIP_EMPTY_ROWS)) != NULL) {
