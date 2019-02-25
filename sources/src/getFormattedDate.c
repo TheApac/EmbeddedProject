@@ -10,5 +10,9 @@ void getFormattedDate(unsigned int dateTime) {
 	struct tm *tmDate = localtime(&time);
 	char buf[80];
 	strftime(buf, sizeof(buf), "%Y_%m_%d_%H_%M_%S", tmDate);
-	// print buf to file
+	FILE *pFile2;
+	pFile2 = fopen("log", "a");
+	fprintf(pFile2, buf);
+	fprintf(pFile2, "\n");
+	fclose(pFile2);
 }
