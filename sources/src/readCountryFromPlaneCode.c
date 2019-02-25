@@ -5,6 +5,7 @@
 #include "../include/readCountryFromPlaneCode.h"
 #include <xlsxio_read.h>
 #include "stdlib.h"
+#include <string.h>
 
 char* readCountryFromPlaneCode(unsigned char code[]) {
 	xlsxioreader xlsxioread;
@@ -22,7 +23,7 @@ char* readCountryFromPlaneCode(unsigned char code[]) {
 				if (col == 0) {
 					country = val;
 				}
-				if (col == 1 && val == code) {
+				if (col == 1 && strcmp(val, (char*)code) == 0) {
 					free(val);
 					xlsxioread_sheet_close(sheet);
 					xlsxioread_close(xlsxioread);
