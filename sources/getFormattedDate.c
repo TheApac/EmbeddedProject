@@ -2,7 +2,7 @@
 // Created by acuevas on 11/02/19.
 //
 #include <time.h>
-#include "../include/getFormattedDate.h"
+#include "getFormattedDate.h"
 #include <stdio.h>
 
 void getFormattedDate(unsigned int dateTime) {

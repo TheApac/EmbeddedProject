@@ -2,7 +2,7 @@
 // Created by acuevas on 25/02/19.
 //
 
-#include "../include/hex2dec.h"
+#include "hex2dec.h"
 #include <string.h>
 
 unsigned int hex2dec(char hexVal[])

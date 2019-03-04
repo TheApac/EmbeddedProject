@@ -2,7 +2,7 @@
 // Created by acuevas on 11/02/19.
 //
 
-#include "../include/readCountryFromPlaneCode.h"
+#include "readCountryFromPlaneCode.h"
 #include <xlsxio_read.h>
 #include "stdlib.h"
 #include <string.h>
