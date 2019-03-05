@@ -7,6 +7,8 @@
 
 #define MAX_COMMENT_SIZE 1000
 
+#include "plane.h"
+
 unsigned int nbFailure = 0;
 
 struct failure
@@ -25,6 +27,6 @@ struct failure
 
 };
 
-void printFailureToFile(struct failure fail);
+void printFailureToFile(struct failure fail, struct plane pl);
 
 #endif //UNTITLED6_FAILURE_H

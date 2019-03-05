@@ -5,7 +5,12 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "failure.h"
+#include "readComponentFromValue.h"
+#include "readTypePlaneFromValue.h"
+#include "readCountryFromPlaneCode.h"
+#include "readFailureFromValue.h"
 
 /*
  * Append a clear error log in the failure log file
@@ -13,24 +18,48 @@
  */
 
 
-void printFailureToFile(struct failure fail) {
+void printFailureToFile(struct failure fail, struct plane pl) {
 	FILE *file;
 	time_t     timeDate;
 	struct tm  ts;
 	char       buf[80];
-
+	char       *path = (char*) malloc(20);
+	char *thepath = "";
+	strcpy(path,"Extraction_report_");
 	nbFailure += 1;
-	file = fopen("error.log", "a");
+
+	timeDate = time(NULL);
+	ts = *localtime(&timeDate);
+
+	strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &ts);
+//	strcat(path, pl.id_plane);
+
+	path = (char*)realloc(path, strlen(pl.id_plane) + sizeof(buf) + 11);
+	strcat(path, pl.id_plane);
+	strcat(path, "_");
+	strcat(path, (char*)buf);
+	strcat(path, ".txt");
+	//printf("%s\n", path);
+
+	if (fopen(path, "r") == NULL) {
+		file = fopen(path, "w");
+		fprintf(file, "FAILURE REPORT\n\n");
+		fprintf(file, "%s\n", pl.id_plane);
+		fprintf(file, "%s\n", readTypePlaneFromValue(pl.type_plane));
+		fprintf(file, "PLANE NATIONALITY: %s\n", readCountryFromPlaneCode(pl.id_plane));
+	} else {
+		file = fopen(path, "a");
+	}
 	if(file == NULL) {
 		perror("Error opening file.");
 	} else {
 		fprintf(file, "----------\n");
-		fprintf(file, "FAILURE %d: %d\n", nbFailure, fail.id_failure_x);
+		fprintf(file, "FAILURE %d: %s\n", nbFailure, readFailureFromValue(fail.id_failure_x));
 		timeDate = fail.datetime_failure_x;
 		ts = *localtime(&timeDate);
 		strftime(buf, sizeof(buf), "%Y/%m/%d-%H:%M:%S", &ts);
 		fprintf(file, "TIME: %s\n", buf);
-		fprintf(file, "COMPONENT FAILURE: %d\n", fail.id_component_failure_x);
+		fprintf(file, "COMPONENT FAILURE: %s\n", readComponentFromValue(fail.id_component_failure_x));
 		fprintf(file, "LEVEL CRITICITY: %d\n", fail.level_criticity_failure_x);
 		fprintf(file, "COMMENT: %s\n", fail.comment_failure_x);
 	}
