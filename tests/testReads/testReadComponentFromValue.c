@@ -4,10 +4,23 @@
 #include <check.h>
 #include <stdlib.h>
 
-
-
-
 START_TEST(test_simple)
+{
+	int r;
+
+	r = atoi("42");
+	ck_assert_int_eq(r, 42);
+} END_TEST
+
+START_TEST(test_simple2)
+{
+	int r;
+
+	r = atoi("42");
+	ck_assert_int_eq(r, 42);
+} END_TEST
+
+START_TEST(test_simple3)
 {
 	int r;
 
@@ -23,6 +36,8 @@ Suite *test(void) {
   tc_core = tcase_create("Core");
 
   tcase_add_test(tc_core, test_simple);
+  tcase_add_test(tc_core, test_simple2);
+  tcase_add_test(tc_core, test_simple3);
   suite_add_tcase(s, tc_core);
 
   return s;
