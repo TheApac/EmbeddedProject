@@ -27,4 +27,4 @@ coverage_report.html: test
 .PHONY: clean all
 
 clean:
-	-rm *.o *.html *.gcda *.gcno testReadComponentFromValue
+	-rm *.o *.html *.gcda *.gcno testReadComponentFromValue libmycode.a tests/*/*.o tests/*/*.gcno

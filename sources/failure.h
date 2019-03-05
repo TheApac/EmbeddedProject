@@ -7,7 +7,7 @@
 
 #define MAX_COMMENT_SIZE 1000
 
-struct failure
+struct Failure
 
 {
     unsigned int datetime_failure_x;
@@ -23,5 +23,7 @@ struct failure
     unsigned char comment_failure_x[MAX_COMMENT_SIZE];
 
 };
+
+void printFailureToFile(Failure* failure);
 
 #endif //UNTITLED6_FAILURE_H
