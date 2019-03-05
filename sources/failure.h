@@ -7,6 +7,8 @@
 
 #define MAX_COMMENT_SIZE 1000
 
+unsigned int nbFailure = 0;
+
 struct failure
 {
     unsigned int datetime_failure_x;
