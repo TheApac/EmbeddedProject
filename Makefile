@@ -5,17 +5,18 @@ TST_LIBS = -lcheck -lm -lpthread -lrt
 COV_LIBS = -lgcov -coverage
 SRC_DIR= sources
 TST_DIR= tests
-SRC_FILES = $(addprefix $(SRC_DIR)/, *.c) 
+SRC_FILES = $(addprefix $(SRC_DIR)/, *.c)
+H_FILES = $(addprefix $(SRC_DIR)/, *.h)
 TST_FILES = $(addprefix $(TST_DIR)/, *.c)
-O_FILES = hex2dec.o
-H_FILES = hex2dec.h
+O_FILES = $(addprefix $(FUNC_FILES), *.o)
 FILE_TEST = testReadComponentFromValue.o
 GCOV = gcovr
 GCONV_FLAGS = -r . --html --html-details
+FUNC_FILES = hex2dec
 
 all: coverage_report.html clean
 
-$(O_FILES):  $(SRC_FILES) $(addprefix $(SRC_DIR)/, $(H_FILES))
+$(O_FILES):  $(SRC_FILES) $(H_FILES)
 	$(CC) $(CFLAGS) $(PROFILE_FLAGS) $(SRC_FILES)
 
 $(FILE_TEST): $(TST_FILES)
@@ -33,4 +34,4 @@ coverage_report.html: test
 .PHONY: clean all
 
 clean:
-	-rm *.o *.html *.gcda *.gcno testReadComponentFromValue libmycode.a tests/*/*.o tests/*/*.gcno 2>/dev/null || true
+	-rm *.o *.html *.gcda *.gcno testReadComponentFromValue libmycode.a tests/*.o tests/*.gcno 2>/dev/null || true
