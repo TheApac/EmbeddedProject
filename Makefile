@@ -15,8 +15,11 @@ all: coverage_report.html
 hex2dec.o:  $(SRC_FILES) $(addprefix $(SRC_DIR)/, hex2dec.h)
 	$(CC) $(CFLAGS) $(PROFILE_FLAGS) $(SRC_FILES)
 
-testReadComponentFromValue: tests/testReads/testReadComponentFromValue.o
-	$(CC) tests/testReads/testReadComponentFromValue.o $(TST_LIBS) $(COV_LIBS) -o testReadComponentFromValue
+testReadComponentFromValue.o: $(TST_FILES)
+	$(CC) $(CFLAGS) $(PROFILE_FLAGS)  $(TST_FILES)
+
+testReadComponentFromValue: hex2dec.o testReadComponentFromValue.o
+	$(CC) hex2dec.o testReadComponentFromValue.o $(TST_LIBS) $(COV_LIBS) -o testReadComponentFromValue
 
 test: testReadComponentFromValue
 	./testReadComponentFromValue

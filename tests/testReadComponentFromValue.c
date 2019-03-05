@@ -3,13 +3,14 @@
 //
 #include <check.h>
 #include <stdlib.h>
+#include "../sources/hex2dec.h"
 
 START_TEST(test_simple)
 {
 	int r;
 
-	r = atoi("42");
-	ck_assert_int_eq(r, 42);
+	r = hex2dec("0xF");
+	ck_assert_int_eq(r, 15);
 } END_TEST
 
 START_TEST(test_simple2)
