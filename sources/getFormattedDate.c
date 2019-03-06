@@ -4,16 +4,13 @@
 #include <time.h>
 #include "getFormattedDate.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-void getFormattedDate(unsigned int dateTime) {
+char *getFormattedDate(unsigned int dateTime) {
 	long int sec = dateTime;
 	time_t time = sec;
 	struct tm *tmDate = localtime(&time);
-	char buf[80];
+	char *buf = malloc(sizeof(char) * 80);
 	strftime(buf, sizeof(buf), "%Y_%m_%d_%H_%M_%S", tmDate);
-	FILE *pFile2;
-	pFile2 = fopen("log", "a");
-	fprintf(pFile2, buf);
-	fprintf(pFile2, "\n");
-	fclose(pFile2);
+	return buf;
 }

@@ -11,6 +11,7 @@
 #include "readTypePlaneFromValue.h"
 #include "readCountryFromPlaneCode.h"
 #include "readFailureFromValue.h"
+#include "getFormattedDate.h"
 
 /*
  * Append a clear error log in the failure log file
@@ -21,15 +22,11 @@
 
 void printFailureToFile(struct failure fail, struct plane pl) {
 	FILE *file;
-	time_t timeDate;
 	struct tm ts;
 	char buf[80];
 	char *path = (char *) malloc(20);
 	strcpy(path, "Extraction_report_");
 	nbFailure += 1;
-
-	timeDate = time(NULL);
-	ts = *localtime(&timeDate);
 
 	strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &ts);
 //	strcat(path, pl.id_plane);
@@ -55,10 +52,9 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 	} else {
 		fprintf(file, "----------\n");
 		fprintf(file, "FAILURE %d: %s\n", nbFailure, readFailureFromValue(fail.id_failure_x));
-		timeDate = fail.datetime_failure_x;
-		ts = *localtime(&timeDate);
-		strftime(buf, sizeof(buf), "%Y/%m/%d-%H:%M:%S", &ts);
-		fprintf(file, "TIME: %s\n", buf);
+		char *time = getFormattedDate(fail.datetime_failure_x);
+		fprintf(file, "TIME: %s\n", time);
+		free(time);
 		fprintf(file, "COMPONENT FAILURE: %s\n", readComponentFromValue(fail.id_component_failure_x));
 		fprintf(file, "LEVEL CRITICITY: %d\n", fail.level_criticity_failure_x);
 		fprintf(file, "COMMENT: %s\n", fail.comment_failure_x);

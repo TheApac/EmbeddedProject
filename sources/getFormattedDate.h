@@ -6,6 +6,6 @@
 #ifndef UNTITLED6_GETFORMATTEDDATE_H
 #define UNTITLED6_GETFORMATTEDDATE_H
 
-void getFormattedDate(unsigned int dateTime);
+char *getFormattedDate(unsigned int dateTime);
 
 #endif //UNTITLED6_GETFORMATTEDDATE_H
