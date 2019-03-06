@@ -14,8 +14,7 @@
 #include "../sources/getFormattedDate.h"
 #include "../sources/readCountryFromPlaneCode.h"
 
-mmk_mock_define (xlsx_mock, xlsxioreader,
-char *);
+mmk_mock_define (xlsx_mock, xlsxioreader,char *);
 
 
 //----------------------------hex2dec----------------------
@@ -24,42 +23,31 @@ START_TEST (test_hexa_letter) {
 
 	r = hex2dec("0xF");
 	ck_assert_int_eq(r, 15);
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_hexa_number) {
 	int r;
 
 	r = hex2dec("0x5");
 	ck_assert_int_eq(r, 5);
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_hexa_number_0) {
 	int r;
 
 	r = hex2dec("0x0");
 	ck_assert_int_eq(r, 0);
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_not_hexa_return_0) {
 	int r;
 
 	r = hex2dec("bonjour");
 	ck_assert_int_eq(r, 0);
-}
+}END_TEST
 
-END_TEST
-
-	Suite
-*
-
-test_hex2dec(void) {
-	Suite * s;
+Suite *test_hex2dec(void) {
+	Suite *s;
 	TCase *tc_core;
 
 	s = suite_create("test hex2dec");
@@ -79,46 +67,32 @@ START_TEST (test_RCFV_exist) {
 
 	r = readComponentFromValue(0x2009);
 	ck_assert_str_eq(r, "Elevator");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RCFV_not_exist) {
 	char *r;
 
 	r = readComponentFromValue(0x2022);
 	ck_assert_str_eq(r, "");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RCFV_file_not_found) {
-
 	xlsx_mock mock = mmk_mock("xlsxioread_open@self", xlsx_mock);
-
 	void *result = NULL;
 	mmk_when(xlsxioread_open(mmk_any(
 	char *)),
 	.then_return = &result,
 	.then_errno = ENOMEM);
-
 	assert(xlsxioread_open("Embedded_World-Request_for_proposal-Annex1.xlsx") == result && errno == ENOMEM);
 
 	char *r;
-
 	r = readComponentFromValue(0x2022);
 	ck_assert_str_eq(r, "noFile");
 
 	mmk_reset(mock);
+}END_TEST
 
-}
-
-END_TEST
-
-	Suite
-*
-
-test_readComponentFromValue(void) {
+Suite *test_readComponentFromValue(void) {
 	Suite * s;
 	TCase *tc_core;
 
@@ -138,46 +112,32 @@ START_TEST (test_RFFV_exist) {
 
 	r = readFailureFromValue(0x1007);
 	ck_assert_str_eq(r, "Too_Cold temperature error");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RFFV_not_exist) {
 	char *r;
 
 	r = readFailureFromValue(0x101D);
 	ck_assert_str_eq(r, "");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RFFV_file_not_found) {
-
 	xlsx_mock mock = mmk_mock("xlsxioread_open@self", xlsx_mock);
-
 	void *result = NULL;
 	mmk_when(xlsxioread_open(mmk_any(
 	char *)),
 	.then_return = &result,
 	.then_errno = ENOMEM);
-
 	assert(xlsxioread_open("Embedded_World-Request_for_proposal-Annex1.xlsx") == result && errno == ENOMEM);
 
 	char *r;
-
 	r = readFailureFromValue(0x1007);
 	ck_assert_str_eq(r, "noFile");
 
 	mmk_reset(mock);
+}END_TEST
 
-}
-
-END_TEST
-
-	Suite
-*
-
-test_readFailureFromValue(void) {
+Suite *test_readFailureFromValue(void) {
 	Suite * s;
 	TCase *tc_core;
 
@@ -197,46 +157,32 @@ START_TEST (test_RTPFV_exist) {
 
 	r = readTypePlaneFromValue(0x015E);
 	ck_assert_str_eq(r, "Airbus A350");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RTPFV_not_exist) {
 	char *r;
 
 	r = readTypePlaneFromValue(0x016D);
 	ck_assert_str_eq(r, "");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RTPFV_file_not_found) {
-
 	xlsx_mock mock = mmk_mock("xlsxioread_open@self", xlsx_mock);
-
 	void *result = NULL;
 	mmk_when(xlsxioread_open(mmk_any(
 	char *)),
 	.then_return = &result,
 	.then_errno = ENOMEM);
-
 	assert(xlsxioread_open("Embedded_World-Request_for_proposal-Annex1.xlsx") == result && errno == ENOMEM);
 
 	char *r;
-
 	r = readTypePlaneFromValue(0x016D);
 	ck_assert_str_eq(r, "noFile");
 
 	mmk_reset(mock);
+}END_TEST
 
-}
-
-END_TEST
-
-	Suite
-*
-
-test_readTypePlaneFromValue(void) {
+Suite *test_readTypePlaneFromValue(void) {
 	Suite * s;
 	TCase *tc_core;
 
@@ -256,64 +202,46 @@ START_TEST (test_RCFPC_exist_start) {
 
 	r = readCountryFromPlaneCode((unsigned char *) "T9-AAA");
 	ck_assert_str_eq(r, "Bosnia and Herzegovina");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RCFPC_exist_middle) {
 	char *r;
 
 	r = readCountryFromPlaneCode((unsigned char *) "T9-SJW");
 	ck_assert_str_eq(r, "Bosnia and Herzegovina");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RCFPC_exist_end) {
 	char *r;
 
 	r = readCountryFromPlaneCode((unsigned char *) "T9-ZZZ");
 	ck_assert_str_eq(r, "Bosnia and Herzegovina");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RCFPC_not_exist) {
 	char *r;
 
 	r = readCountryFromPlaneCode((unsigned char *) "ma3'é9-AET");
 	ck_assert_str_eq(r, "");
-}
-
-END_TEST
+}END_TEST
 
 START_TEST(test_RCFPC_file_not_found) {
-
 	xlsx_mock mock = mmk_mock((char *) "xlsxioread_open@self", xlsx_mock);
-
 	void *result = NULL;
 	mmk_when(xlsxioread_open(mmk_any(
 	char *)),
 	.then_return = &result,
 	.then_errno = ENOMEM);
-
 	assert(xlsxioread_open("Embedded_World-Request_for_proposal-Annex1.xlsx") == result && errno == ENOMEM);
 
 	char *r;
-
 	r = readCountryFromPlaneCode((unsigned char *) "T9-ZZZ");
 	ck_assert_str_eq(r, "noFile");
 
 	mmk_reset(mock);
+}END_TEST
 
-}
-
-END_TEST
-
-	Suite
-*
-
-test_readCountryFromPlaneCode(void) {
+Suite *test_readCountryFromPlaneCode(void) {
 	Suite * s;
 	TCase *tc_core;
 
