@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -c -Wall
+CFLAGS = -c -Wall -lxlsxio_read
 PROFILE_FLAGS = -fprofile-arcs -ftest-coverage
-TST_LIBS = -lcheck -lm -lpthread -lrt 
+TST_LIBS = -lcheck -lm -lpthread -lrt -lxlsxio_read -lmimick
 COV_LIBS = -lgcov -coverage
 SRC_DIR= sources
 TST_DIR= tests

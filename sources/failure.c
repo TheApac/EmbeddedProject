@@ -15,17 +15,17 @@
 /*
  * Append a clear error log in the failure log file
  * @param failure The failure struct with every important information
+ * @param pl The plane on which the error happened
  */
 
 
 void printFailureToFile(struct failure fail, struct plane pl) {
 	FILE *file;
-	time_t     timeDate;
-	struct tm  ts;
-	char       buf[80];
-	char       *path = (char*) malloc(20);
-	char *thepath = "";
-	strcpy(path,"Extraction_report_");
+	time_t timeDate;
+	struct tm ts;
+	char buf[80];
+	char *path = (char *) malloc(20);
+	strcpy(path, "Extraction_report_");
 	nbFailure += 1;
 
 	timeDate = time(NULL);
@@ -34,10 +34,10 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 	strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &ts);
 //	strcat(path, pl.id_plane);
 
-	path = (char*)realloc(path, strlen(pl.id_plane) + sizeof(buf) + 11);
-	strcat(path, pl.id_plane);
+	path = (char *) realloc(path, strlen((char *) pl.id_plane) + sizeof(buf) + 11);
+	strcat(path, (char *) pl.id_plane);
 	strcat(path, "_");
-	strcat(path, (char*)buf);
+	strcat(path, (char *) buf);
 	strcat(path, ".txt");
 	//printf("%s\n", path);
 
@@ -50,7 +50,7 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 	} else {
 		file = fopen(path, "a");
 	}
-	if(file == NULL) {
+	if (file == NULL) {
 		perror("Error opening file.");
 	} else {
 		fprintf(file, "----------\n");
