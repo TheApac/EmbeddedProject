@@ -11,6 +11,17 @@
 
 unsigned int nbFailure = 0;
 
+/**
+ * \struct failure
+ * \brief Object that contain all information about failure
+ *
+ * failure contain the date of the failure,
+ * the id of the failure,
+ * the id of the component failure,
+ * a max size failure comment,
+ * the failure level criticity
+ * a failure comment
+ */
 struct failure
 {
     unsigned int datetime_failure_x;
@@ -27,6 +38,11 @@ struct failure
 
 };
 
+/**
+ *
+ * \param fail failure structure to print
+ * \param pl plane structure
+ */
 void printFailureToFile(struct failure fail, struct plane pl);
 
 #endif //UNTITLED6_FAILURE_H
