@@ -22,21 +22,16 @@
 
 void printFailureToFile(struct failure fail, struct plane pl) {
 	FILE *file;
-	struct tm ts;
-	char buf[80];
+	char *time = getFormattedDate(fail.datetime_failure_x);
 	char *path = (char *) malloc(20);
 	strcpy(path, "Extraction_report_");
 	nbFailure += 1;
 
-	strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &ts);
-//	strcat(path, pl.id_plane);
 
-	path = (char *) realloc(path, strlen((char *) pl.id_plane) + sizeof(buf) + 11);
 	strcat(path, (char *) pl.id_plane);
 	strcat(path, "_");
-	strcat(path, (char *) buf);
+	strcat(path, time);
 	strcat(path, ".txt");
-	//printf("%s\n", path);
 
 	if (fopen(path, "r") == NULL) {
 		file = fopen(path, "w");
@@ -52,13 +47,12 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 	} else {
 		fprintf(file, "----------\n");
 		fprintf(file, "FAILURE %d: %s\n", nbFailure, readFailureFromValue(fail.id_failure_x));
-		char *time = getFormattedDate(fail.datetime_failure_x);
 		fprintf(file, "TIME: %s\n", time);
-		free(time);
 		fprintf(file, "COMPONENT FAILURE: %s\n", readComponentFromValue(fail.id_component_failure_x));
 		fprintf(file, "LEVEL CRITICITY: %d\n", fail.level_criticity_failure_x);
 		fprintf(file, "COMMENT: %s\n", fail.comment_failure_x);
 	}
+	free(time);
 	fclose(file);
 }
 
