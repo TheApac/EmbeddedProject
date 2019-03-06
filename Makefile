@@ -8,11 +8,11 @@ TST_DIR= tests
 SRC_FILES = $(addprefix $(SRC_DIR)/, *.c)
 H_FILES = $(addprefix $(SRC_DIR)/, *.h)
 TST_FILES = $(addprefix $(TST_DIR)/, *.c)
-O_FILES = $(addprefix $(FUNC_FILES), *.o)
+O_FILES = $(addsuffix .o, $(FUNC_FILES))
 FILE_TEST = testReadComponentFromValue.o
 GCOV = gcovr
 GCONV_FLAGS = -r . --html --html-details
-FUNC_FILES = hex2dec
+FUNC_FILES = hex2dec readComponentFromValue readFailureFromValue readTypePlaneFromValue getFormattedDate readCountryFromPlaneCode
 
 all: coverage_report.html clean
 

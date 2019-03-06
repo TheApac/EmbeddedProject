@@ -10,7 +10,7 @@
 char* readFailureFromValue(unsigned int value) {
 	xlsxioreader xlsxioread;
 	if ((xlsxioread = xlsxioread_open("Embedded_World-Request_for_proposal-Annex1.xlsx")) == NULL) {
-		return "";
+		return "noFile";
 	}
 	char* type;
 	char *val;
