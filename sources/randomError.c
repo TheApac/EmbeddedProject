@@ -27,8 +27,8 @@ char *autoGeneration(int nb) {
 	//printf("%s\n", json);
 	return json;
 }
-
+/*
 int main(int argc, char** argv)
 {
 	printf("%s\n", autoGeneration(2));
-}
+}*/
