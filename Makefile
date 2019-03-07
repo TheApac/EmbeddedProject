@@ -14,7 +14,7 @@ GCOV = gcovr
 GCONV_FLAGS = -r . --html --html-details
 FUNC_FILES = hex2dec readComponentFromValue readFailureFromValue readTypePlaneFromValue getFormattedDate readCountryFromPlaneCode
 
-all: coverage_report.html clean
+all: cleanAll coverage_report.html clean
 
 $(O_FILES):  $(SRC_FILES) $(H_FILES)
 	$(CC) $(CFLAGS) $(PROFILE_FLAGS) $(SRC_FILES)
@@ -33,5 +33,8 @@ coverage_report.html: test
 
 .PHONY: clean all
 
-clean:
+cleanAll:
 	-rm *.o *.html *.gcda *.gcno testReadComponentFromValue libmycode.a tests/*.o tests/*.gcno 2>/dev/null || true
+
+clean:
+	-rm *.o *.gcda *.gcno testReadComponentFromValue libmycode.a tests/*.o tests/*.gcno 2>/dev/null || true
