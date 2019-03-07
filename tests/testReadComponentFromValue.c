@@ -17,8 +17,10 @@
 #include "../sources/getFormattedDate.h"
 #include "../sources/failure.h"
 
-mmk_mock_define (xlsx_mock, xlsxioreader,char *);
-mmk_mock_define (fopen_mock, xlsxioreader,char *,char *);
+mmk_mock_define (xlsx_mock, xlsxioreader,
+char *);
+mmk_mock_define (fopen_mock, xlsxioreader,
+char *,char *);
 
 //----------------------------hex2dec----------------------
 START_TEST (test_hexa_letter) {
@@ -26,31 +28,42 @@ START_TEST (test_hexa_letter) {
 
 	r = hex2dec("0xF");
 	ck_assert_int_eq(r, 15);
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_hexa_number) {
 	int r;
 
 	r = hex2dec("0x5");
 	ck_assert_int_eq(r, 5);
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_hexa_number_0) {
 	int r;
 
 	r = hex2dec("0x0");
 	ck_assert_int_eq(r, 0);
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_not_hexa_return_0) {
 	int r;
 
 	r = hex2dec("bonjour");
 	ck_assert_int_eq(r, 0);
-}END_TEST
+}
 
-Suite *test_hex2dec(void) {
-	Suite *s;
+END_TEST
+
+	Suite
+*
+
+test_hex2dec(void) {
+	Suite * s;
 	TCase *tc_core;
 
 	s = suite_create("test hex2dec");
@@ -70,14 +83,18 @@ START_TEST (test_RCFV_exist) {
 
 	r = readComponentFromValue(0x2009);
 	ck_assert_str_eq(r, "Elevator");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RCFV_not_exist) {
 	char *r;
 
 	r = readComponentFromValue(0x2022);
 	ck_assert_str_eq(r, "");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RCFV_file_not_found) {
 	xlsx_mock mock = mmk_mock("xlsxioread_open@self", xlsx_mock);
@@ -93,9 +110,14 @@ START_TEST(test_RCFV_file_not_found) {
 	ck_assert_str_eq(r, "noFile");
 
 	mmk_reset(mock);
-}END_TEST
+}
 
-Suite *test_readComponentFromValue(void) {
+END_TEST
+
+	Suite
+*
+
+test_readComponentFromValue(void) {
 	Suite * s;
 	TCase *tc_core;
 
@@ -115,14 +137,18 @@ START_TEST (test_RFFV_exist) {
 
 	r = readFailureFromValue(0x1007);
 	ck_assert_str_eq(r, "Too_Cold temperature error");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RFFV_not_exist) {
 	char *r;
 
 	r = readFailureFromValue(0x101D);
 	ck_assert_str_eq(r, "");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RFFV_file_not_found) {
 	xlsx_mock mock = mmk_mock("xlsxioread_open@self", xlsx_mock);
@@ -138,9 +164,14 @@ START_TEST(test_RFFV_file_not_found) {
 	ck_assert_str_eq(r, "noFile");
 
 	mmk_reset(mock);
-}END_TEST
+}
 
-Suite *test_readFailureFromValue(void) {
+END_TEST
+
+	Suite
+*
+
+test_readFailureFromValue(void) {
 	Suite * s;
 	TCase *tc_core;
 
@@ -160,14 +191,18 @@ START_TEST (test_RTPFV_exist) {
 
 	r = readTypePlaneFromValue(0x015E);
 	ck_assert_str_eq(r, "Airbus A350");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RTPFV_not_exist) {
 	char *r;
 
 	r = readTypePlaneFromValue(0x016D);
 	ck_assert_str_eq(r, "");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RTPFV_file_not_found) {
 	xlsx_mock mock = mmk_mock("xlsxioread_open@self", xlsx_mock);
@@ -183,9 +218,14 @@ START_TEST(test_RTPFV_file_not_found) {
 	ck_assert_str_eq(r, "noFile");
 
 	mmk_reset(mock);
-}END_TEST
+}
 
-Suite *test_readTypePlaneFromValue(void) {
+END_TEST
+
+	Suite
+*
+
+test_readTypePlaneFromValue(void) {
 	Suite * s;
 	TCase *tc_core;
 
@@ -205,35 +245,45 @@ START_TEST (test_RCFPC_exist_start) {
 
 	r = readCountryFromPlaneCode((unsigned char *) "T9-AAA");
 	ck_assert_str_eq(r, "Bosnia and Herzegovina");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RCFPC_exist_middle) {
 	char *r;
 
 	r = readCountryFromPlaneCode((unsigned char *) "T9-SJW");
 	ck_assert_str_eq(r, "Bosnia and Herzegovina");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RCFPC_exist_end) {
 	char *r;
 
 	r = readCountryFromPlaneCode((unsigned char *) "T9-ZZZ");
 	ck_assert_str_eq(r, "Bosnia and Herzegovina");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RCFPC_not_exist) {
 	char *r;
 
 	r = readCountryFromPlaneCode((unsigned char *) "ma3'é9-AET");
 	ck_assert_str_eq(r, "");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RCFPC_one_elem) {
 	char *r;
 
 	r = readCountryFromPlaneCode((unsigned char *) "SX-H");
 	ck_assert_str_eq(r, "Greece");
-}END_TEST
+}
+
+END_TEST
 
 START_TEST(test_RCFPC_file_not_found) {
 	xlsx_mock mock = mmk_mock((char *) "xlsxioread_open@self", xlsx_mock);
@@ -249,9 +299,14 @@ START_TEST(test_RCFPC_file_not_found) {
 	ck_assert_str_eq(r, "noFile");
 
 	mmk_reset(mock);
-}END_TEST
+}
 
-Suite *test_readCountryFromPlaneCode(void) {
+END_TEST
+
+	Suite
+*
+
+test_readCountryFromPlaneCode(void) {
 	Suite * s;
 	TCase *tc_core;
 
@@ -275,17 +330,24 @@ START_TEST (test_GFD_title) {
 
 	r = getFormattedDate(date, 0);
 	ck_assert_str_eq(r, "2019_03_06_14_03_50");
-}END_TEST
+}
 
-START_TEST (test_GFD_file) {
+END_TEST
+
+START_TEST(test_GFD_file) {
 	char *r;
 	unsigned int date = 1551877430;
 
 	r = getFormattedDate(date, 1);
 	ck_assert_str_eq(r, "2019/03/06-14:03:50");
-}END_TEST
+}
 
-Suite *test_getFormattedDate(void) {
+END_TEST
+
+	Suite
+*
+
+test_getFormattedDate(void) {
 	Suite * s;
 	TCase *tc_core;
 
@@ -300,138 +362,135 @@ Suite *test_getFormattedDate(void) {
 
 //----------------------------failure----------------------
 START_TEST (test_failure_work) {
-    char *filename = (char *) malloc(50);
+	char *filename = (char *) malloc(50);
 
 	struct failure fail;
-	fail = (struct failure){.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
-	struct plane planeA = (struct plane){ "D2-ZZZ",1,380 };
+	fail = (struct failure) {.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
+	struct plane planeA = (struct plane) {"D2-ZZZ", 1, 380};
 
-	printFailureToFile(fail,planeA);
-	printFailureToFile(fail,planeA);
-	printFailureToFile(fail,planeA);
-	printFailureToFile(fail,planeA);
+	printFailureToFile(fail, planeA);
+	printFailureToFile(fail, planeA);
+	printFailureToFile(fail, planeA);
+	printFailureToFile(fail, planeA);
 
 	strcpy(filename, "Extraction_report_");
 	strcat(filename, (char *) planeA.id_plane);
-    strcat(filename, "_");
-    strcat(filename, getFormattedDate(fail.datetime_failure_x, 0));
-    strcat(filename, ".txt");
+	strcat(filename, "_");
+	strcat(filename, getFormattedDate(fail.datetime_failure_x, 0));
+	strcat(filename, ".txt");
 
 
-    FILE *fp = fopen(filename, "r");
-    if (fp == NULL){
-        ck_assert_str_eq("true", "false");
-    }
-    int nbLine = 0;
-    int ch=0;
-    while(!feof(fp))
-    {
-        ch = fgetc(fp);
-        if(ch == '\n')
-        {
-            nbLine++;
-        }
-    }
+	FILE *fp = fopen(filename, "r");
+	ck_assert_ptr_nonnull(fp);
+	int nbLine = 0;
+	int ch = 0;
+	while (!feof(fp)) {
+		ch = fgetc(fp);
+		if (ch == '\n') {
+			nbLine++;
+		}
+	}
 
-    fclose(fp);
-    //remove(filename);
-    int nbLineWait = 4 * 6 + 5;
-    ck_assert_int_eq(nbLine, nbLineWait);
-}END_TEST
+	fclose(fp);
+	//remove(filename);
+	int nbLineWait = 4 * 6 + 5;
+	ck_assert_int_eq(nbLine, nbLineWait);
+}
 
-START_TEST (test_failure_already_exist) {
-    char *filename = (char *) malloc(50);
+END_TEST
+
+START_TEST(test_failure_already_exist) {
+	char *filename = (char *) malloc(50);
 
 	struct failure fail;
-	fail = (struct failure){.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
-	struct plane planeA = (struct plane){ "D2-ZZZ",1,380 };
+	fail = (struct failure) {.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
+	struct plane planeA = (struct plane) {"D2-ZZZ", 1, 380};
 
 	strcpy(filename, "Extraction_report_");
 	strcat(filename, (char *) planeA.id_plane);
-    strcat(filename, "_");
-    strcat(filename, getFormattedDate(fail.datetime_failure_x, 0));
-    strcat(filename, ".txt");
+	strcat(filename, "_");
+	strcat(filename, getFormattedDate(fail.datetime_failure_x, 0));
+	strcat(filename, ".txt");
 
 
-    FILE *fp = fopen(filename, "r");
-    if (fp == NULL){
-        ck_assert_str_eq("true", "false");
-    }
-    int nbLinePrevious = 0;
-    int ch=0;
-    while(!feof(fp))
-    {
-        ch = fgetc(fp);
-        if(ch == '\n')
-        {
-            nbLinePrevious++;
-        }
-    }
+	FILE *fp = fopen(filename, "r");
+	ck_assert_ptr_nonnull(fp);
+	int nbLinePrevious = 0;
+	int ch = 0;
+	while (!feof(fp)) {
+		ch = fgetc(fp);
+		if (ch == '\n') {
+			nbLinePrevious++;
+		}
+	}
 
-    fclose(fp);
+	fclose(fp);
 
-    printFailureToFile(fail,planeA);
-    printFailureToFile(fail,planeA);
-    printFailureToFile(fail,planeA);
-    printFailureToFile(fail,planeA);
+	printFailureToFile(fail, planeA);
+	printFailureToFile(fail, planeA);
+	printFailureToFile(fail, planeA);
+	printFailureToFile(fail, planeA);
 
-    fp = fopen(filename, "r");
-    if (fp == NULL){
-        ck_assert_str_eq("true", "false");
-    }
-    int nbLine = 0;
-    ch=0;
-    while(!feof(fp))
-    {
-        ch = fgetc(fp);
-        if(ch == '\n')
-        {
-            nbLine++;
-        }
-    }
+	fp = fopen(filename, "r");
+	ck_assert_ptr_nonnull(fp);
+	int nbLine = 0;
+	ch = 0;
+	while (!feof(fp)) {
+		ch = fgetc(fp);
+		if (ch == '\n') {
+			nbLine++;
+		}
+	}
 
-    remove(filename);
-    int nbLineWait = 4 * 6 + nbLinePrevious;
-    ck_assert_int_eq(nbLine, nbLineWait);
-}END_TEST
+	remove(filename);
+	int nbLineWait = 4 * 6 + nbLinePrevious;
+	ck_assert_int_eq(nbLine, nbLineWait);
+}
 
-START_TEST (test_failure_file_not_exist) {
-    char *filename = (char *) malloc(50);
+END_TEST
 
-    struct failure fail;
-    fail = (struct failure){.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
-    struct plane planeA = (struct plane){ "D2-ZZZ",1,380 };
+START_TEST(test_failure_file_not_exist) {
+	char *filename = (char *) malloc(50);
 
-    strcpy(filename, "Extraction_report_");
-    strcat(filename, (char *) planeA.id_plane);
-    strcat(filename, "_");
-    strcat(filename, getFormattedDate(fail.datetime_failure_x, 0));
-    strcat(filename, ".txt");
+	struct failure fail;
+	fail = (struct failure) {.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
+	struct plane planeA = (struct plane) {"D2-ZZZ", 1, 380};
 
-    fopen_mock mock = mmk_mock((char *) "fopen@self", fopen_mock);
-    void *result = NULL;
-    mmk_when(fopen(mmk_any(char *),mmk_any(char *)),
-            .then_return = &result,
-    .then_errno = ENOMEM);
-    assert(fopen(filename, "w") == result && errno == ENOMEM);
-    assert(fopen(filename, "r") == result && errno == ENOMEM);
-    assert(fopen(filename, "a") == result && errno == ENOMEM);
+	strcpy(filename, "Extraction_report_");
+	strcat(filename, (char *) planeA.id_plane);
+	strcat(filename, "_");
+	strcat(filename, getFormattedDate(fail.datetime_failure_x, 0));
+	strcat(filename, ".txt");
 
-    printFailureToFile(fail,planeA);
+	fopen_mock mock = mmk_mock((char *) "fopen@self", fopen_mock);
+	void *result = NULL;
+	mmk_when(fopen(mmk_any(
+	char *),mmk_any(
+	char *)),
+	.then_return = &result,
+	.then_errno = ENOMEM);
+	assert(fopen(filename, "w") == result && errno == ENOMEM);
+	assert(fopen(filename, "r") == result && errno == ENOMEM);
+	assert(fopen(filename, "a") == result && errno == ENOMEM);
 
-    mmk_reset(mock);
+	printFailureToFile(fail, planeA);
+
+	mmk_reset(mock);
 
 
-    FILE *fp = fopen(filename, "r");
-    if (fp == NULL){
-        ck_assert_str_eq("false", "false");
-    }
+	FILE *fp = fopen(filename, "r");
+	ck_assert_ptr_null(fp);
 
-    //fclose(fp);
-    //remove(filename);
-}END_TEST
+	//fclose(fp);
+	//remove(filename);
+}
 
-Suite *test_failure(void) {
+END_TEST
+
+	Suite
+*
+
+test_failure(void) {
 	Suite * s;
 	TCase *tc_core;
 

@@ -1,3 +1,4 @@
 .idea/
 CmakeList.txt
 cmake-build-debug/
+*.html
