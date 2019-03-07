@@ -23,7 +23,8 @@
 void printFailureToFile(struct failure fail, struct plane pl) {
 	FILE *file;
 	// Gets the date of the error
-	char *time = getFormattedDate(fail.datetime_failure_x);
+	char *timeFile = getFormattedDate(fail.datetime_failure_x, 1);
+	char *time = getFormattedDate(fail.datetime_failure_x, 0);
 	char *path = (char *) malloc(20);
 	// Create the name of the file
 	strcpy(path, "Extraction_report_");
@@ -53,13 +54,14 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 		// Append a new failure in the log file
 		fprintf(file, "----------\n");
 		fprintf(file, "FAILURE %d: %s\n", nbFailure, readFailureFromValue(fail.id_failure_x));
-		fprintf(file, "TIME: %s\n", time);
+		fprintf(file, "TIME: %s\n", timeFile);
 		fprintf(file, "COMPONENT FAILURE: %s\n", readComponentFromValue(fail.id_component_failure_x));
 		fprintf(file, "LEVEL CRITICITY: %d\n", fail.level_criticity_failure_x);
 		fprintf(file, "COMMENT: %s\n", fail.comment_failure_x);
 	}
 	// Cleanup
 	free(time);
+	free(timeFile);
 	// Close the file
 	fclose(file);
 }

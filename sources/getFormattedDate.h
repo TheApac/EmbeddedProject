@@ -11,6 +11,6 @@
  * \param dateTime date in timestamp
  * \return date formated like YYYY/MM/DD-HH:mm:ss
  */
-char *getFormattedDate(unsigned int dateTime);
+char *getFormattedDate(unsigned int dateTime, int insideFile);
 
 #endif //UNTITLED6_GETFORMATTEDDATE_H

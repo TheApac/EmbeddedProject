@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char *getFormattedDate(unsigned int dateTime) {
+char *getFormattedDate(unsigned int dateTime, int insideFile) {
 	long int sec = dateTime;
 	// Convert the seconds to a timestamp
 	time_t time = sec;
@@ -14,6 +14,10 @@ char *getFormattedDate(unsigned int dateTime) {
 	struct tm *tmDate = localtime(&time);
 	char *buf = malloc(sizeof(char) * 80);
 	// Convert the date to a formatted string
-	strftime(buf, sizeof(buf), "%Y/%m/%d-%H:%M:%S", tmDate);
+	if (insideFile == 0) {
+		strftime(buf, sizeof(buf), "%Y_%m_%d_%H_%M_%S", tmDate);
+	} else {
+		strftime(buf, sizeof(buf), "%Y/%m/%d-%H:%M:%S", tmDate);
+	}
 	return buf;
 }
