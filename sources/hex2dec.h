@@ -1,7 +1,8 @@
-//
-// Created by acuevas on 25/02/19.
-//
-
+/**
+ * \file hex2dec.h
+ * \author THE
+ * \brief Convert an array of char in decimal
+ */
 #ifndef UNTITLED6_HEX2DEC_H
 #define UNTITLED6_HEX2DEC_H
 

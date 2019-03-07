@@ -1,6 +1,8 @@
-//
-// Created by acuevas on 11/02/19.
-//
+/**
+ * \file readComponentFromValue.h
+ * \author ACU
+ * \brief Retrieve a plane component from his integer value
+ */
 #ifndef UNTITLED6_READCOMPONENTFROMVALUE_H
 #define UNTITLED6_READCOMPONENTFROMVALUE_H
 

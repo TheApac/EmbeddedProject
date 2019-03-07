@@ -1,6 +1,8 @@
-//
-// Created by acuevas on 11/02/19.
-//
+/**
+ * \file readFailureFromValue.h
+ * \author THE
+ * \brief Retrieve failure type from his value
+ */
 #ifndef UNTITLED6_READFAILUREFROMVALUE_H
 #define UNTITLED6_READFAILUREFROMVALUE_H
 

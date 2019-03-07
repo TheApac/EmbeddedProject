@@ -1,7 +1,8 @@
-//
-// Created by acuevas on 11/02/19.
-//
-
+/**
+ * \file readCountryFromPlaneCode.h
+ * \author BSU
+ * \brief Retrieve country from the plane code
+ */
 #ifndef UNTITLED6_READCOUNTRYFROMPLANECODE_H
 #define UNTITLED6_READCOUNTRYFROMPLANECODE_H
 

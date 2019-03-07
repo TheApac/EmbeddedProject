@@ -1,7 +1,8 @@
-//
-// Created by acuevas on 11/02/19.
-//
-
+/**
+ * \file plane.h
+ * \author JCH
+ * \brief Contain the structure of a plane
+ */
 #ifndef UNTITLED6_PLANE_H
 #define UNTITLED6_PLANE_H
 

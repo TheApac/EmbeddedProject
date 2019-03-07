@@ -1,7 +1,8 @@
-//
-// Created by acuevas on 11/02/19.
-//
-
+/**
+ * \file failure.h
+ * \author BSU
+ * \brief Define failure structure and the function to print the failure in a file
+ */
 #ifndef UNTITLED6_FAILURE_H
 #define UNTITLED6_FAILURE_H
 
@@ -39,7 +40,7 @@ struct failure
 };
 
 /**
- *
+ * \brief print a failure in a file
  * \param fail failure structure to print
  * \param pl plane structure
  */

@@ -1,6 +1,8 @@
-//
-// Created by acuevas on 11/02/19.
-//
+/**
+ * \file getFormattedDate.h
+ * \author ACU
+ * \brief Transform a date from timestamp to YYYY/MM/DD-HH:mm:ss format
+ */
 #include <string.h>
 
 #ifndef UNTITLED6_GETFORMATTEDDATE_H

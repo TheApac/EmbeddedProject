@@ -1,7 +1,8 @@
-//
-// Created by acuevas on 11/02/19.
-//
-
+/**
+ * \file readTypePlaneFromValue.h
+ * \author JCH
+ * \brief Retrieve plane type from his value
+ */
 #ifndef UNTITLED6_READTYPEPLANEFROMVALUE_H
 #define UNTITLED6_READTYPEPLANEFROMVALUE_H
 
