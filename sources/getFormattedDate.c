@@ -8,9 +8,12 @@
 
 char *getFormattedDate(unsigned int dateTime) {
 	long int sec = dateTime;
+	// Convert the seconds to a timestamp
 	time_t time = sec;
+	// Convert the timestamp to a date struct at the localtime
 	struct tm *tmDate = localtime(&time);
 	char *buf = malloc(sizeof(char) * 80);
-	strftime(buf, sizeof(buf), "%Y_%m_%d_%H_%M_%S", tmDate);
+	// Convert the date to a formatted string
+	strftime(buf, sizeof(buf), "%Y/%m/%d-%H:%M:%S", tmDate);
 	return buf;
 }

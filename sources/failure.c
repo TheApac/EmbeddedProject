@@ -22,19 +22,24 @@
 
 void printFailureToFile(struct failure fail, struct plane pl) {
 	FILE *file;
+	// Gets the date of the error
 	char *time = getFormattedDate(fail.datetime_failure_x);
 	char *path = (char *) malloc(20);
+	// Create the name of the file
 	strcpy(path, "Extraction_report_");
+	// Increase the number of failures by 1
 	nbFailure += 1;
-
-
+	// Append plane id to name of file
 	strcat(path, (char *) pl.id_plane);
 	strcat(path, "_");
 	strcat(path, time);
 	strcat(path, ".txt");
 
+	// If file doesn't exist
 	if (fopen(path, "r") == NULL) {
+		// First create it
 		file = fopen(path, "w");
+		// And add header to it
 		fprintf(file, "FAILURE REPORT\n\n");
 		fprintf(file, "%s\n", pl.id_plane);
 		fprintf(file, "%s\n", readTypePlaneFromValue(pl.type_plane));
@@ -45,6 +50,7 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 	if (file == NULL) {
 		perror("Error opening file.");
 	} else {
+		// Append a new failure in the log file
 		fprintf(file, "----------\n");
 		fprintf(file, "FAILURE %d: %s\n", nbFailure, readFailureFromValue(fail.id_failure_x));
 		fprintf(file, "TIME: %s\n", time);
@@ -52,7 +58,9 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 		fprintf(file, "LEVEL CRITICITY: %d\n", fail.level_criticity_failure_x);
 		fprintf(file, "COMMENT: %s\n", fail.comment_failure_x);
 	}
+	// Cleanup
 	free(time);
+	// Close the file
 	fclose(file);
 }
 
