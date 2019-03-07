@@ -15,9 +15,9 @@ char *getFormattedDate(unsigned int dateTime, int insideFile) {
 	char *buf = malloc(sizeof(char) * 80);
 	// Convert the date to a formatted string
 	if (insideFile == 0) {
-		strftime(buf, sizeof(buf), "%Y_%m_%d_%H_%M_%S", tmDate);
+		strftime(buf, 20, "%Y_%m_%d_%H_%M_%S", tmDate);
 	} else {
-		strftime(buf, sizeof(buf), "%Y/%m/%d-%H:%M:%S", tmDate);
+		strftime(buf, 20, "%Y/%m/%d-%H:%M:%S", tmDate);
 	}
 	return buf;
 }

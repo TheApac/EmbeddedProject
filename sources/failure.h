@@ -10,7 +10,6 @@
 
 #include "plane.h"
 
-unsigned int nbFailure = 0;
 
 /**
  * \struct failure
