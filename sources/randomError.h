@@ -20,5 +20,6 @@ char *idPlane[61] = {"YA-AAA", "ZA-AAA", "7T-AAA", "C3-AAA", "D2-AAA", "VP-AAA",
 char *typePlane[11] = { "320", "330", "350", "380", "400", "295", "737", "747", "767", "777", "787"};
 
 
+char *autoGeneration(int nb);
 
 #endif //EMBEDDEDPROJECT_RANDOMERROR_H

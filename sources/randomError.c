@@ -8,7 +8,7 @@
 char *autoGeneration(int nb) {
 	srand(time(NULL));
 	int i = 0;
-	char json[4096];
+	static char json[4096];
 
 	if (nb == 0) {
 		return "";
@@ -27,8 +27,8 @@ char *autoGeneration(int nb) {
 	//printf("%s\n", json);
 	return json;
 }
-/*
+
 int main(int argc, char** argv)
 {
-	autoGeneration(2);
-}*/
+	printf("%s\n", autoGeneration(2));
+}
