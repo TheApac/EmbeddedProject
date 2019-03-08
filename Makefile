@@ -12,7 +12,7 @@ O_FILES = $(addsuffix .o, $(FUNC_FILES))
 FILE_TEST = testReadComponentFromValue.o
 GCOV = gcovr
 GCONV_FLAGS = -r . --html --html-details
-FUNC_FILES = hex2dec readComponentFromValue readFailureFromValue readTypePlaneFromValue getFormattedDate readCountryFromPlaneCode failure
+FUNC_FILES = hex2dec readComponentFromValue readFailureFromValue readTypePlaneFromValue getFormattedDate readCountryFromPlaneCode failure strSplit
 
 all: clean coverage_report.html cleanAll
 

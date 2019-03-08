@@ -16,6 +16,7 @@
 #include "../sources/readCountryFromPlaneCode.h"
 #include "../sources/getFormattedDate.h"
 #include "../sources/failure.h"
+#include "../sources/strSplit.h"
 
 mmk_mock_define (xlsx_mock, xlsxioreader,
 char *);
@@ -504,6 +505,44 @@ test_failure(void) {
 	return s;
 }
 
+//----------------------------str_split----------------------
+START_TEST (test_strSplit_valid_split) {
+        char **r;
+
+        //char **res = { 1, 0, 0 };
+
+        r = str_split("bonjour", 'j');
+
+        ck_assert_str_eq(r[0], "bon");
+}
+
+END_TEST
+
+START_TEST(test_strSplit_not_plit) {
+    char **r;
+
+    r = str_split("bonjour", 'v');
+    ck_assert_str_eq(r[0], "bonjour");
+}
+
+END_TEST
+
+        Suite
+*
+
+test_str_split(void) {
+    Suite * s;
+    TCase *tc_core;
+
+    s = suite_create("test str_split");
+    tc_core = tcase_create("Core");
+
+    tcase_add_test(tc_core, test_strSplit_valid_split);
+    //tcase_add_test(tc_core, test_strSplit_not_plit);
+    suite_add_tcase(s, tc_core);
+    return s;
+}
+
 int main(void) {
 	int no_failed = 0;
 	Suite * s;
@@ -546,6 +585,12 @@ int main(void) {
 	srunner_free(runner);
 
 	s = test_failure();
+	runner = srunner_create(s);
+	srunner_run_all(runner, CK_NORMAL);
+	no_failed = srunner_ntests_failed(runner);
+	srunner_free(runner);
+
+	s = test_str_split();
 	runner = srunner_create(s);
 	srunner_run_all(runner, CK_NORMAL);
 	no_failed = srunner_ntests_failed(runner);
