@@ -8,7 +8,7 @@
 
 char *epurStr(char *str) {
 	int i = 0;
-	char *buff = (char*) malloc(sizeof(char*) * strlen(str));
+	char *buff = (char *) malloc(sizeof(char *) * strlen(str));
 	int j = 0;
 
 	if (str[i] == ',')
@@ -26,7 +26,7 @@ char *epurStr(char *str) {
 struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 	char *temp;
 	char **tabComa;
-	char** tab;
+	char **tab;
 	char **tabBuf;
 	struct failure *fail = malloc(sizeof(struct failure) * nbFailure + 1);
 	int i = 0;
@@ -36,24 +36,27 @@ struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 	tabComa = str_split(json, '[');
 	tabComa = str_split(tabComa[1], '}');
 	while (i < nbFailure) {
-	temp = epurStr(tabComa[i]);
+		temp = epurStr(tabComa[i]);
 		j = 0;
 		tab = str_split(temp, ',');
 		while (j < 6) {
 
 			tabBuf = str_split(tab[j], ':');
-			if (strcmp(tabBuf[0], "Id_failure") == 0)
+			if (strcmp(tabBuf[0], "\nId_failure") == 0 || strcmp(tabBuf[0], "\n\nId_failure") == 0) {
 				fail[i].id_failure_x = atoi(tabBuf[1]);
-			if (strcmp(tabBuf[0], "Date") == 0)
+			} else if (strcmp(tabBuf[0], " Date") == 0) {
 				fail[i].datetime_failure_x = atoi(tabBuf[1]);
-			if (strcmp(tabBuf[0], "Id_component") == 0)
+			} else if (strcmp(tabBuf[0], " Id_component") == 0) {
 				fail[i].id_component_failure_x = atoi(tabBuf[1]);
-			if (strcmp(tabBuf[0], "Level_criticity") == 0) {
+			} else if (strcmp(tabBuf[0], " Level_criticity") == 0) {
 				fail[i].level_criticity_failure_x = atoi(tabBuf[1]);
-				//printf("%s\n", tabBuf[0]);
-			}
-			if (strcmp(tabBuf[0], "Comment_failure") == 0)
+			} else if (strcmp(tabBuf[0], " Comment_failure") == 0) {
 				strcpy(fail[i].comment_failure_x, tabBuf[1]);
+			} else if (strcmp(tabBuf[0], " Comment_failure_size") == 0) {
+				strcpy(fail[i].comment_failure_x_size, tabBuf[1]);
+			} else {
+				printf("err x%sx", tabBuf[0]);
+			}
 			j += 1;
 		}
 		//printf("Id failure: %d, Date : %d, Id Component: %d, level criticity: %d, comment failure: %s\n", fail[i].id_failure_x,
@@ -61,6 +64,6 @@ struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 		i += 1;
 	}
 //	printf("Id failure: %d, Date : %d, Id Component: %d, level criticity: %d, comment failure: %s\n", fail[0].id_failure_x,
-		//   fail[0].datetime_failure_x, fail[0].id_component_failure_x, fail[0].level_criticity_failure_x, fail[0].comment_failure_x);
+	//   fail[0].datetime_failure_x, fail[0].id_component_failure_x, fail[0].level_criticity_failure_x, fail[0].comment_failure_x);
 	return fail;
 }
