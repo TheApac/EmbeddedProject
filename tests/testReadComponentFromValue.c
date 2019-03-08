@@ -577,7 +577,7 @@ test_getPlaneFromJson(void) {
 	return s;
 }
 
-//----------------------------getPlaneFromJson----------------------
+//----------------------------getFailureFromJson----------------------
 
 
 START_TEST (test_json_failure_valid) {
@@ -590,14 +590,14 @@ START_TEST (test_json_failure_valid) {
 	r = getFailureFromJson(text, 2);
 	ck_assert_int_eq(r[0].id_failure_x, 4105);
 	ck_assert_str_eq(r[0].comment_failure_x, "Test Failure");
-	ck_assert_int_eq(r[0].comment_failure_x_size, 13);
+	ck_assert_str_eq(r[0].comment_failure_x_size, "13");
 	ck_assert_int_eq(r[0].datetime_failure_x, 1793007013);
 	ck_assert_int_eq(r[0].id_component_failure_x, 8201);
 	ck_assert_int_eq(r[0].level_criticity_failure_x, 0);
 
 	ck_assert_int_eq(r[1].id_failure_x, 4103);
 	ck_assert_str_eq(r[1].comment_failure_x, "Test Failure");
-	ck_assert_int_eq(r[1].comment_failure_x_size, 13);
+	ck_assert_str_eq(r[1].comment_failure_x_size, "13");
 	ck_assert_int_eq(r[1].datetime_failure_x, 25736911);
 	ck_assert_int_eq(r[1].id_component_failure_x, 8199);
 	ck_assert_int_eq(r[1].level_criticity_failure_x, 5);
@@ -610,7 +610,7 @@ test_getFailureFromJson(void) {
 	Suite * s;
 	TCase *tc_core;
 
-	s = suite_create("test getPlaneFromJson");
+	s = suite_create("test getFailureFromJson");
 	tc_core = tcase_create("Core");
 
 	tcase_add_test(tc_core, test_json_failure_valid);

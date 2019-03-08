@@ -42,7 +42,8 @@ struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 		while (j < 6) {
 
 			tabBuf = str_split(tab[j], ':');
-			if (strcmp(tabBuf[0], "\nId_failure") == 0 || strcmp(tabBuf[0], "\n\nId_failure") == 0) {
+			if (strcmp(tabBuf[0], " \nId_failure") == 0 || strcmp(tabBuf[0], "\n\nId_failure") == 0) {
+
 				fail[i].id_failure_x = atoi(tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Date") == 0) {
 				fail[i].datetime_failure_x = atoi(tabBuf[1]);
@@ -51,11 +52,11 @@ struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 			} else if (strcmp(tabBuf[0], " Level_criticity") == 0) {
 				fail[i].level_criticity_failure_x = atoi(tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Comment_failure") == 0) {
-				strcpy(fail[i].comment_failure_x, tabBuf[1]);
+                strcpy(fail[i].comment_failure_x, tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Comment_failure_size") == 0) {
 				strcpy(fail[i].comment_failure_x_size, tabBuf[1]);
 			} else {
-				printf("err x%sx", tabBuf[0]);
+                printf("err x%sx\n", tabBuf[0]);
 			}
 			j += 1;
 		}
