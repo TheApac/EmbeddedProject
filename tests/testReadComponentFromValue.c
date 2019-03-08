@@ -17,6 +17,8 @@
 #include "../sources/getFormattedDate.h"
 #include "../sources/failure.h"
 #include "../sources/strSplit.h"
+#include "../sources/getPlaneFromJson.h"
+#include "../sources/getFailureFromJson.h"
 
 mmk_mock_define (xlsx_mock, xlsxioreader,
 char *);
@@ -507,41 +509,116 @@ test_failure(void) {
 
 //----------------------------str_split----------------------
 START_TEST (test_strSplit_valid_split) {
-        char **r;
+	char **r;
+	char text[] = "bonjour";
 
-        //char **res = { 1, 0, 0 };
-
-        r = str_split("bonjour", 'j');
-
-        ck_assert_str_eq(r[0], "bon");
+	r = str_split(text, 'j');
+	ck_assert_str_eq(r[0], "bon");
+	ck_assert_str_eq(r[1], "our");
 }
 
 END_TEST
 
 START_TEST(test_strSplit_not_plit) {
-    char **r;
-
-    r = str_split("bonjour", 'v');
-    ck_assert_str_eq(r[0], "bonjour");
+	char **r;
+	char text[] = "bonjour";
+	r = str_split(text, 'v');
+	ck_assert_str_eq(r[0], "bonjour");
+	ck_assert_ptr_null(r[1]);
 }
 
 END_TEST
 
-        Suite
+	Suite
 *
 
 test_str_split(void) {
-    Suite * s;
-    TCase *tc_core;
+	Suite * s;
+	TCase *tc_core;
 
-    s = suite_create("test str_split");
-    tc_core = tcase_create("Core");
+	s = suite_create("test str_split");
+	tc_core = tcase_create("Core");
 
-    tcase_add_test(tc_core, test_strSplit_valid_split);
-    //tcase_add_test(tc_core, test_strSplit_not_plit);
-    suite_add_tcase(s, tc_core);
-    return s;
+	tcase_add_test(tc_core, test_strSplit_valid_split);
+	tcase_add_test(tc_core, test_strSplit_not_plit);
+	suite_add_tcase(s, tc_core);
+	return s;
 }
+
+
+//----------------------------getPlaneFromJson----------------------
+
+
+START_TEST (test_json_plane_valid) {
+	struct plane r;
+	char text[] = "{\n"
+		"Id_plane:VH-AAA, Type_plane:777, Nb_failures:2, failures:[\n"
+		"{\n"
+		"Id_failure:4105, Date:1793007013, Id_component:8201, Level_criticity:0, Comment_failure_size:12, Comment_failure:Test Failure }, {\n"
+		"Id_failure:4103, Date:25736911, Id_component:8199, Level_criticity:5, Comment_failure_size:12, Comment_failure:Test Failure } ] }";
+	r = getPlaneFromJson(text);
+	ck_assert_str_eq(r.id_plane, "VH-AAA");
+	ck_assert_int_eq(r.nb_failures, 2);
+	ck_assert_int_eq(r.type_plane, 777);
+}
+
+END_TEST
+
+
+test_getPlaneFromJson(void) {
+	Suite * s;
+	TCase *tc_core;
+
+	s = suite_create("test getPlaneFromJson");
+	tc_core = tcase_create("Core");
+
+	tcase_add_test(tc_core, test_json_plane_valid);
+	suite_add_tcase(s, tc_core);
+	return s;
+}
+
+//----------------------------getPlaneFromJson----------------------
+
+
+START_TEST (test_json_failure_valid) {
+	struct failure *r;
+	char text[] = "{\n"
+		"Id_plane:VH-AAA, Type_plane:777, Nb_failures:2, failures:[\n"
+		"{\n"
+		"Id_failure:4105, Date:1793007013, Id_component:8201, Level_criticity:0, Comment_failure_size:12, Comment_failure:Test Failure }, {\n"
+		"Id_failure:4103, Date:25736911, Id_component:8199, Level_criticity:5, Comment_failure_size:12, Comment_failure:Test Failure } ] }";
+	r = getFailureFromJson(text, 2);
+	ck_assert_int_eq(r[0].id_failure_x, 4105);
+	ck_assert_str_eq(r[0].comment_failure_x, "Test Failure");
+	ck_assert_int_eq(r[0].comment_failure_x_size, 13);
+	ck_assert_int_eq(r[0].datetime_failure_x, 1793007013);
+	ck_assert_int_eq(r[0].id_component_failure_x, 8201);
+	ck_assert_int_eq(r[0].level_criticity_failure_x, 0);
+
+	ck_assert_int_eq(r[1].id_failure_x, 4103);
+	ck_assert_str_eq(r[1].comment_failure_x, "Test Failure");
+	ck_assert_int_eq(r[1].comment_failure_x_size, 13);
+	ck_assert_int_eq(r[1].datetime_failure_x, 25736911);
+	ck_assert_int_eq(r[1].id_component_failure_x, 8199);
+	ck_assert_int_eq(r[1].level_criticity_failure_x, 5);
+}
+
+END_TEST
+
+
+test_getFailureFromJson(void) {
+	Suite * s;
+	TCase *tc_core;
+
+	s = suite_create("test getPlaneFromJson");
+	tc_core = tcase_create("Core");
+
+	tcase_add_test(tc_core, test_json_failure_valid);
+	suite_add_tcase(s, tc_core);
+	return s;
+}
+
+//----------------------------------------------------------------
 
 int main(void) {
 	int no_failed = 0;
@@ -595,6 +672,19 @@ int main(void) {
 	srunner_run_all(runner, CK_NORMAL);
 	no_failed = srunner_ntests_failed(runner);
 	srunner_free(runner);
+
+	s = test_getPlaneFromJson();
+	runner = srunner_create(s);
+	srunner_run_all(runner, CK_NORMAL);
+	no_failed = srunner_ntests_failed(runner);
+	srunner_free(runner);
+
+	s = test_getFailureFromJson();
+	runner = srunner_create(s);
+	srunner_run_all(runner, CK_NORMAL);
+	no_failed = srunner_ntests_failed(runner);
+	srunner_free(runner);
+
 
 	return (no_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

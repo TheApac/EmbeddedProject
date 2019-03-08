@@ -9,7 +9,7 @@
 struct plane getPlaneFromJson(char *json) {
 	char *temp;
 	char **tabComa;
-	char** tab;
+	char **tab;
 	struct plane pl;
 
 	// Get id Plane from JSON

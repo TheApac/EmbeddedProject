@@ -6,8 +6,8 @@
 #include "failure.h"
 
 struct plane getPlaneFromJson(char *json);
-struct failure *getFailureFromJson(char *json, unsigned int nbFailure);
 
+struct failure *getFailureFromJson(char *json, unsigned int nbFailure);
 
 
 char *autoGeneration(int nb) {
@@ -20,13 +20,16 @@ char *autoGeneration(int nb) {
 		return "";
 	}
 
-	sprintf(json, "{Id_plane:%s,Type_plane:%s,Nb_failures:%d,failures:[{", idPlane[rand()%60], typePlane[rand()%11], nb);
+	sprintf(json, "{Id_plane:%s,Type_plane:%s,Nb_failures:%d,failures:[{", idPlane[rand() % 60],
+		typePlane[rand() % 11], nb);
 
 	while (i < nb) {
 		if (i != 0)
 			sprintf(json, "%s,{", json);
-		sprintf(json, "%sId_failure:%d,Date:%d,Id_component:%d,Level_criticity:%d,Comment_failure_size:12,Comment_failure:Test Failure}",json,
-			rand()%(0x100D-0x1000) + 0x1000, date, rand()%(0x200D-0x2000) + 0x2000, rand()%10);
+		sprintf(json,
+			"%sId_failure:%d,Date:%d,Id_component:%d,Level_criticity:%d,Comment_failure_size:12,Comment_failure:Test Failure}",
+			json,
+			rand() % (0x100D - 0x1000) + 0x1000, date, rand() % (0x200D - 0x2000) + 0x2000, rand() % 10);
 		i += 1;
 	}
 	sprintf(json, "%s]}", json);
@@ -34,10 +37,8 @@ char *autoGeneration(int nb) {
 	return json;
 }
 
-
 // Main de test
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
 	char *json = autoGeneration(3);
 	struct plane pl;
 	struct failure *fail;
