@@ -1,6 +1,8 @@
-//
-// Created by Scaduto Enzo on 2019-03-07.
-//
+/**
+ * \file strSplit.h
+ * \author ESC
+ * \brief Split a string with a delimiter
+ */
 
 #ifndef EMBEDDEDPROJECT_STRSPLIT_H
 #define EMBEDDEDPROJECT_STRSPLIT_H
@@ -10,6 +12,12 @@
 #include <string.h>
 #include <assert.h>
 
-char** str_split(char* a_str, const char a_delim);
+/**
+ * \brief Split a string with a delimiter
+ * \param a_str the string to split
+ * \param a_delim the delimiter
+ * \return an array of the split string
+ */
+char **str_split(char *a_str, const char a_delim);
 
 #endif //EMBEDDEDPROJECT_STRSPLIT_H

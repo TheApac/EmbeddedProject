@@ -1,8 +1,0 @@
-//
-// Created by acuevas on 11/02/19.
-//
-
-#ifndef UNTITLED6_PRINTINLOGFILE_H
-#define UNTITLED6_PRINTINLOGFILE_H
-
-#endif //UNTITLED6_PRINTINLOGFILE_H
