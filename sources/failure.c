@@ -26,37 +26,32 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 	// Gets the date of the error
 	char *timeFile = getFormattedDate(fail.datetime_failure_x, 1);
 	char *time = getFormattedDate(fail.datetime_failure_x, 0);
-	char *path = (char *) malloc(50);
-	// Create the name of the file
+	char path[50];
 	strcpy(path, "Extraction_report_");
-	// Increase the number of failures by 1
-	nbFailure += 1;
-	// Append plane id to name of file
 	strcat(path, (char *) pl.id_plane);
 	strcat(path, "_");
 	strcat(path, time);
 	strcat(path, ".txt");
+	// Increase the number of failures by 1
+	nbFailure += 1;
 
 	// If file doesn't exist
 	if (fopen(path, "r") == NULL) {
+		// First create it
+		file = fopen(path, "w");
+		if (file != NULL) {
+			// And add header to it
+			fprintf(file, "FAILURE REPORT\n\n");
+			fprintf(file, "%s\n", pl.id_plane);
+			fprintf(file, "%s\n", readTypePlaneFromValue(pl.type_plane));
+			fprintf(file, "PLANE NATIONALITY: %s\n", readCountryFromPlaneCode(pl.id_plane));
+		}
 
-        // First create it
-        file = fopen(path, "w");
-
-        if (file != NULL) {
-
-            // And add header to it
-            fprintf(file, "FAILURE REPORT\n\n");
-            fprintf(file, "%s\n", pl.id_plane);
-            fprintf(file, "%s\n", readTypePlaneFromValue(pl.type_plane));
-            fprintf(file, "PLANE NATIONALITY: %s\n", readCountryFromPlaneCode(pl.id_plane));
-        }
-
-    } else {
-        file = fopen(path, "a");
+	} else {
+		file = fopen(path, "a");
 	}
 	if (file == NULL) {
-        //perror("Error opening file.");
+		//perror("Error opening file.");
 	} else {
 		// Append a new failure in the log file
 		fprintf(file, "----------\n");
@@ -66,11 +61,7 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 		fprintf(file, "LEVEL CRITICITY: %d\n", fail.level_criticity_failure_x);
 		fprintf(file, "COMMENT: %s\n", fail.comment_failure_x);
 		// Cleanup
-        free(time);
-        free(timeFile);
-        // Close the file
-        fclose(file);
+		fclose(file);
 	}
-
 }
 

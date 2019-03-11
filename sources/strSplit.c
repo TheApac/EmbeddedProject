@@ -13,7 +13,7 @@ char **str_split(char *a_str, const char a_delim) {
 	delim[0] = a_delim;
 	delim[1] = 0;
 
-	/* Count how many elements will be extracted. */
+	// Count how many elements will be extracted.
 	while (*tmp) {
 		if (a_delim == *tmp) {
 			count++;
@@ -22,11 +22,10 @@ char **str_split(char *a_str, const char a_delim) {
 		tmp++;
 	}
 
-	/* Add space for trailing token. */
+	// Add space for trailing token.
 	count += last_comma < (a_str + strlen(a_str) - 1);
 
-	/* Add space for terminating null string so caller
-	   knows where the list of returned strings ends. */
+	// Add space for terminating null string so caller knows where the list of returned strings ends.
 	count++;
 
 	result = malloc(sizeof(char *) * count);

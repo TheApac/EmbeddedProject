@@ -52,19 +52,13 @@ struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 			} else if (strcmp(tabBuf[0], " Level_criticity") == 0) {
 				fail[i].level_criticity_failure_x = atoi(tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Comment_failure") == 0) {
-                strcpy(fail[i].comment_failure_x, tabBuf[1]);
+				strcpy(fail[i].comment_failure_x, tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Comment_failure_size") == 0) {
 				strcpy(fail[i].comment_failure_x_size, tabBuf[1]);
-			} else {
-                printf("err x%sx\n", tabBuf[0]);
 			}
 			j += 1;
 		}
-		//printf("Id failure: %d, Date : %d, Id Component: %d, level criticity: %d, comment failure: %s\n", fail[i].id_failure_x,
-		//	   fail[i].datetime_failure_x, fail[i].id_component_failure_x, fail[i].level_criticity_failure_x, fail[i].comment_failure_x);
 		i += 1;
 	}
-//	printf("Id failure: %d, Date : %d, Id Component: %d, level criticity: %d, comment failure: %s\n", fail[0].id_failure_x,
-	//   fail[0].datetime_failure_x, fail[0].id_component_failure_x, fail[0].level_criticity_failure_x, fail[0].comment_failure_x);
 	return fail;
 }
