@@ -39,17 +39,29 @@ char *autoGeneration(int nb) {
 
 // Main de test
 int main(int argc, char **argv) {
-	char *json = autoGeneration(3);
+
+	if (argc < 2) {
+		printf("Error, need at least one argument\n");
+		return 0;
+	}
+	if (argv[1] == "a") {
+		char *json = autoGeneration(argv[2]);
+	} else if (argv[1] == "m") {
+		char *json = argv[2];
+	} else {
+		printf("Error, arg 1 can only be 'a' or 'm'\n");
+		return 0;
+	}
 	struct plane pl;
 	struct failure *fail;
 	printf("%s\n", json);
 
-	pl = getPlaneFromJson(autoGeneration(3));
+	pl = getPlaneFromJson(json);
 	printf("Id Plane : %s\n", pl.id_plane);
 	printf("Type Plane : %d\n", pl.type_plane);
 	printf("Nb Failure : %d\n", pl.nb_failures);
 
-	fail = getFailureFromJson(autoGeneration(3), pl.nb_failures);
+	fail = getFailureFromJson(json, pl.nb_failures);
 	printf("criticity : %d\n", fail[0].level_criticity_failure_x);
 	printf("idfailure : %d\n", fail[0].id_failure_x);
 	printf("comment : %s\n", fail[0].comment_failure_x);
