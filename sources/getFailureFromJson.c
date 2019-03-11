@@ -8,7 +8,9 @@
 
 char *epurStr(char *str) {
 	int i = 0;
-	char *buff = (char *) malloc(sizeof(char *) * strlen(str));
+	int size = sizeof(char *) * strlen(str);
+	//printf("%s\n",size);
+	char *buff[size];
 	int j = 0;
 
 	if (str[i] == ',')
@@ -28,7 +30,8 @@ struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 	char **tabComa;
 	char **tab;
 	char **tabBuf;
-	struct failure *fail = malloc(sizeof(struct failure) * nbFailure + 1);
+	int size = sizeof(struct failure) * nbFailure + 1;
+	struct failure *fail[size];
 	int i = 0;
 	int j = 0;
 
@@ -44,17 +47,17 @@ struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 			tabBuf = str_split(tab[j], ':');
 			if (strcmp(tabBuf[0], " \nId_failure") == 0 || strcmp(tabBuf[0], "\n\nId_failure") == 0) {
 
-				fail[i].id_failure_x = atoi(tabBuf[1]);
+				fail[i]->id_failure_x = atoi(tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Date") == 0) {
-				fail[i].datetime_failure_x = atoi(tabBuf[1]);
+				fail[i]->datetime_failure_x = atoi(tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Id_component") == 0) {
-				fail[i].id_component_failure_x = atoi(tabBuf[1]);
+				fail[i]->id_component_failure_x = atoi(tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Level_criticity") == 0) {
-				fail[i].level_criticity_failure_x = atoi(tabBuf[1]);
+				fail[i]->level_criticity_failure_x = atoi(tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Comment_failure") == 0) {
-				strcpy(fail[i].comment_failure_x, tabBuf[1]);
+				strcpy(fail[i]->comment_failure_x, tabBuf[1]);
 			} else if (strcmp(tabBuf[0], " Comment_failure_size") == 0) {
-				strcpy(fail[i].comment_failure_x_size, tabBuf[1]);
+				strcpy(fail[i]->comment_failure_x_size, tabBuf[1]);
 			}
 			j += 1;
 		}
