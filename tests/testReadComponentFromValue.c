@@ -365,7 +365,7 @@ test_getFormattedDate(void) {
 
 //----------------------------failure----------------------
 START_TEST (test_failure_work) {
-	char *filename = (char *) malloc(50);
+	char *filename[50];
 
 	struct failure fail;
 	fail = (struct failure) {.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
@@ -375,6 +375,9 @@ START_TEST (test_failure_work) {
 	printFailureToFile(fail, planeA);
 	printFailureToFile(fail, planeA);
 	printFailureToFile(fail, planeA);
+
+
+
 
 	strcpy(filename, "Extraction_report_");
 	strcat(filename, (char *) planeA.id_plane);
@@ -403,7 +406,7 @@ START_TEST (test_failure_work) {
 END_TEST
 
 START_TEST(test_failure_already_exist) {
-	char *filename = (char *) malloc(50);
+    char *filename[50];
 
 	struct failure fail;
 	fail = (struct failure) {.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
@@ -453,7 +456,7 @@ START_TEST(test_failure_already_exist) {
 END_TEST
 
 START_TEST(test_failure_file_not_exist) {
-	char *filename = (char *) malloc(50);
+    char *filename[50];
 
 	struct failure fail;
 	fail = (struct failure) {.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
