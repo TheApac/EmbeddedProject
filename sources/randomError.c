@@ -33,7 +33,6 @@ char *autoGeneration(int nb) {
 		i += 1;
 	}
 	sprintf(json, "%s]}", json);
-	//printf("%s\n", json);
 	return json;
 }
 
@@ -45,7 +44,7 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 	if (argv[1] == "a") {
-		json = autoGeneration(argv[2]);
+		json = autoGeneration(atoi(argv[2]));
 	} else if (argv[1] == "m") {
 		json = argv[2];
 	} else {
@@ -57,11 +56,19 @@ int main(int argc, char **argv) {
 	printf("%s\n", json);
 
 	pl = getPlaneFromJson(json);
+	if (pl.nb_failures == 0 && pl.type_plane == 0 && pl.id_plane == '\0') {
+		printf("The JSON file seems erroneous\n");
+		return 0;
+	}
 	printf("Id Plane : %s\n", pl.id_plane);
 	printf("Type Plane : %d\n", pl.type_plane);
 	printf("Nb Failure : %d\n", pl.nb_failures);
 
 	fail = getFailureFromJson(json, pl.nb_failures);
+	if (fail == NULL) {
+		printf("The JSON file seems erroneous\n");
+		return 0;
+	}
 	printf("criticity : %d\n", fail[0].level_criticity_failure_x);
 	printf("idfailure : %d\n", fail[0].id_failure_x);
 	printf("comment : %s\n", fail[0].comment_failure_x);

@@ -39,7 +39,6 @@ char *readCountryFromPlaneCode(unsigned char code[]) {
 					country = val;
 				}
 				if (col == 2) {
-					// Gets the min value
 					char *stringMin = strtok(val, " ");
 					if (stringMin == NULL) {
 						// If we reach the end of the table
@@ -69,8 +68,6 @@ char *readCountryFromPlaneCode(unsigned char code[]) {
 		// If the value couldn't be found, stop the reading process
 		xlsxioread_sheet_close(sheet);
 	}
-	// Close the xlsx file
 	xlsxioread_close(xlsxioread);
-	// And return an empty string
 	return "";
 }

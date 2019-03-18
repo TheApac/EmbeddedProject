@@ -13,12 +13,6 @@
 #include "readFailureFromValue.h"
 #include "getFormattedDate.h"
 
-/*
- * Append a clear error log in the failure log file
- * @param failure The failure struct with every important information
- * @param pl The plane on which the error happened
- */
-
 unsigned int nbFailure = 0;
 
 void printFailureToFile(struct failure fail, struct plane pl) {
@@ -32,7 +26,6 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 	strcat(path, "_");
 	strcat(path, time);
 	strcat(path, ".txt");
-	// Increase the number of failures by 1
 	nbFailure += 1;
 
 	// If file doesn't exist
@@ -50,9 +43,7 @@ void printFailureToFile(struct failure fail, struct plane pl) {
 	} else {
 		file = fopen(path, "a");
 	}
-	if (file == NULL) {
-		//perror("Error opening file.");
-	} else {
+	if (file != NULL) {
 		// Append a new failure in the log file
 		fprintf(file, "----------\n");
 		fprintf(file, "FAILURE %d: %s\n", nbFailure, readFailureFromValue(fail.id_failure_x));

@@ -25,7 +25,6 @@ char *readComponentFromValue(unsigned int value) {
 			while ((val = xlsxioread_sheet_next_cell(sheet)) != NULL) {
 				// If the value is the one we are looking for
 				if (col == 1 && hex2dec(val) == value) {
-					// Return the component associated
 					type = xlsxioread_sheet_next_cell(sheet);
 					// ---- Cleanup ----
 					free(val);
@@ -40,8 +39,6 @@ char *readComponentFromValue(unsigned int value) {
 		// If the value couldn't be found, stop the reading process
 		xlsxioread_sheet_close(sheet);
 	}
-	// Close the xlsx file
 	xlsxioread_close(xlsxioread);
-	// And return an empty string
 	return "";
 }

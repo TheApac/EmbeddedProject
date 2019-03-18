@@ -377,8 +377,6 @@ START_TEST (test_failure_work) {
 	printFailureToFile(fail, planeA);
 
 
-
-
 	strcpy(filename, "Extraction_report_");
 	strcat(filename, (char *) planeA.id_plane);
 	strcat(filename, "_");
@@ -406,7 +404,7 @@ START_TEST (test_failure_work) {
 END_TEST
 
 START_TEST(test_failure_already_exist) {
-    char *filename[50];
+	char *filename[50];
 
 	struct failure fail;
 	fail = (struct failure) {.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
@@ -456,7 +454,7 @@ START_TEST(test_failure_already_exist) {
 END_TEST
 
 START_TEST(test_failure_file_not_exist) {
-    char *filename[50];
+	char *filename[50];
 
 	struct failure fail;
 	fail = (struct failure) {.datetime_failure_x = 1551877430, .id_failure_x = 0x1009, .id_component_failure_x = 0x2005, .comment_failure_x_size = 255, .level_criticity_failure_x = 1, .comment_failure_x = "Failure pas cool"};
@@ -567,6 +565,17 @@ START_TEST (test_json_plane_valid) {
 
 END_TEST
 
+START_TEST(test_json_plane_invalid) {
+	struct plane r;
+	char text[] = "a";
+	r = getPlaneFromJson(text);
+	ck_assert_str_eq(r.id_plane, "error");
+	ck_assert_int_eq(r.nb_failures, 0);
+	ck_assert_int_eq(r.type_plane, 0);
+}
+
+END_TEST
+
 
 test_getPlaneFromJson(void) {
 	Suite * s;
@@ -576,6 +585,7 @@ test_getPlaneFromJson(void) {
 	tc_core = tcase_create("Core");
 
 	tcase_add_test(tc_core, test_json_plane_valid);
+	tcase_add_test(tc_core, test_json_plane_invalid);
 	suite_add_tcase(s, tc_core);
 	return s;
 }
@@ -608,6 +618,15 @@ START_TEST (test_json_failure_valid) {
 
 END_TEST
 
+START_TEST(test_json_failure_invalid) {
+	struct failure *r;
+	char text[] = "A{{{,,{12:;[)[}";
+	r = getFailureFromJson(text, 1);
+	ck_assert_ptr_null(r);
+}
+
+END_TEST
+
 
 test_getFailureFromJson(void) {
 	Suite * s;
@@ -617,6 +636,7 @@ test_getFailureFromJson(void) {
 	tc_core = tcase_create("Core");
 
 	tcase_add_test(tc_core, test_json_failure_valid);
+	tcase_add_test(tc_core, test_json_failure_invalid);
 	suite_add_tcase(s, tc_core);
 	return s;
 }
