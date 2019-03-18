@@ -10,23 +10,21 @@
 #define CATCH } else {
 #define ETRY } }while(0)
 
-
 char *epurStr(char *str) {
+	int len = strlen(str);
 	int i = 0;
-	int size = sizeof(char *) * strlen(str);
-	char *buff = (char *) malloc(sizeof(char *) * strlen(str));
-	int j = 0;
-
-	if (str[i] == ',')
-		i += 1;
-	while (str[i]) {
-		if (str[i] != '{' && str[i] != ']' && str[i] != '}') {
-			buff[j] = str[i];
-			j += 1;
+	int j;
+	for (i = 0; i < len; i++) {
+		if (str[i] == '{' || str[i] == ']' || str[i] == '}') {
+			for (j = i; j < len; j++) {
+				str[j] = str[j + 1];
+			}
+			len--;
+			i--;
 		}
-		i += 1;
 	}
-	return buff;
+	str[strlen(str)] = '\0';
+	return str;
 }
 
 struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
@@ -37,50 +35,60 @@ struct failure *getFailureFromJson(char *json, unsigned int nbFailure) {
 				char **tab;
 				char **tabBuf;
 				int size = sizeof(struct failure) * nbFailure + 1;
-				struct failure *fail = malloc(sizeof(struct failure) * nbFailure + 1);
+				struct failure *fails = malloc(sizeof(struct failure) * nbFailure + 1);
 				int i = 0;
 				int j = 0;
 
 				// Get id Plane from JSON
 				tabComa = str_split(json, '[');
-				if (tabComa[1] == NULL) {
+				if (tabComa == NULL) {
 					printf("The json file is erroneous\n");
 					return NULL;
 				}
 				tabComa = str_split(tabComa[1], '}');
+				if (tabComa == NULL) {
+					printf("The json file is erroneous\n");
+					return NULL;
+				}
 				while (i < nbFailure) {
 					temp = epurStr(tabComa[i]);
 					j = 0;
 					tab = str_split(temp, ',');
+					if (tab == NULL) {
+						printf("The json file is erroneous\n");
+						return NULL;
+					}
+					struct failure fail;
 					while (j < 6) {
 						if (tab[j] == 0) {
 							printf("The json file is erroneous\n");
 							return NULL;
 						}
 						tabBuf = str_split(tab[j], ':');
-
+						if (tabBuf == NULL) {
+							printf("The json file is erroneous\n");
+							return NULL;
+						}
 						if (strcmp(tabBuf[0], " \nId_failure") == 0 ||
 						    strcmp(tabBuf[0], "\n\nId_failure") == 0) {
-
-							fail[i].id_failure_x = atoi(tabBuf[1]);
+							fail.id_failure_x = atoi(tabBuf[1]);
 						} else if (strcmp(tabBuf[0], " Date") == 0) {
-							fail[i].datetime_failure_x = atoi(tabBuf[1]);
+							fail.datetime_failure_x = atoi(tabBuf[1]);
 						} else if (strcmp(tabBuf[0], " Id_component") == 0) {
-							fail[i].id_component_failure_x = atoi(tabBuf[1]);
+							fail.id_component_failure_x = atoi(tabBuf[1]);
 						} else if (strcmp(tabBuf[0], " Level_criticity") == 0) {
-							fail[i].level_criticity_failure_x = atoi(tabBuf[1]);
+							fail.level_criticity_failure_x = atoi(tabBuf[1]);
 						} else if (strcmp(tabBuf[0], " Comment_failure") == 0) {
-							strcpy(fail[i].comment_failure_x, tabBuf[1]);
+							strcpy(fail.comment_failure_x, tabBuf[1]);
 						} else if (strcmp(tabBuf[0], " Comment_failure_size") == 0) {
-							strcpy(fail[i].comment_failure_x_size, tabBuf[1]);
+							strcpy(fail.comment_failure_x_size, tabBuf[1]);
 						}
-
 						j += 1;
-
 					}
+					fails[i] = fail;
 					i += 1;
 				}
-				return fail;
+				return fails;
 			}
 
 		CATCH

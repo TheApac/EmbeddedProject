@@ -19,16 +19,18 @@ char **str_split(char *a_str, const char a_delim) {
 				char delim[2];
 				delim[0] = a_delim;
 				delim[1] = 0;
-
+				if (tmp == NULL) {
+					return NULL;
+				}
 				// Count how many elements will be extracted.
-				while (*tmp) {
-					if (a_delim == *tmp) {
+				int countZ = 0;
+				while (tmp[countZ]) {
+					if (a_delim == tmp[countZ]) {
 						count++;
 						last_comma = tmp;
 					}
-					tmp++;
+					countZ++;
 				}
-
 				// Add space for trailing token.
 				count += last_comma < (a_str + strlen(a_str) - 1);
 

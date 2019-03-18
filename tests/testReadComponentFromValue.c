@@ -601,6 +601,8 @@ START_TEST (test_json_failure_valid) {
 		"Id_failure:4105, Date:1793007013, Id_component:8201, Level_criticity:0, Comment_failure_size:13, Comment_failure:Test Failure}, {\n"
 		"Id_failure:4103, Date:25736911, Id_component:8199, Level_criticity:5, Comment_failure_size:13, Comment_failure:Test Failure} ] }";
 	r = getFailureFromJson(text, 2);
+	ck_assert_ptr_nonnull(r);
+
 	ck_assert_int_eq(r[0].id_failure_x, 4105);
 	ck_assert_str_eq(r[0].comment_failure_x, "Test Failure");
 	ck_assert_str_eq(r[0].comment_failure_x_size, "13");
